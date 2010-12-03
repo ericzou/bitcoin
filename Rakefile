@@ -15,8 +15,8 @@ Jeweler::Tasks.new do |gem|
   gem.name = "bitcoin"
   gem.homepage = "http://github.com/requnix/bitcoin"
   gem.license = "MIT"
-  gem.summary = %Q{TODO: one-line summary of your gem}
-  gem.description = %Q{TODO: longer description of your gem}
+  gem.summary = %Q{Ruby library for communicating with a BitCoin client}
+  gem.description = %Q{The BitCoin RubyGem intends to simplify the process of communicating with and managing a BitCoin client on the same server by issuing commands to it via JSON-RPC. It will also include basic account management and transaction feedback.}
   gem.email = "michael.prins@me.com"
   gem.authors = ["Michael Prins"]
   # Include your dependencies below. Runtime dependencies are required when using your gem,
@@ -45,7 +45,7 @@ task :default => :test
 require 'rake/rdoctask'
 Rake::RDocTask.new do |rdoc|
   version = File.exist?('VERSION') ? File.read('VERSION') : ""
-
+  
   rdoc.rdoc_dir = 'rdoc'
   rdoc.title = "bitcoin #{version}"
   rdoc.rdoc_files.include('README*')

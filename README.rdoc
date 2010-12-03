@@ -1,6 +1,6 @@
-= bitcoin
+= BitCoin Gem
 
-Description goes here.
+BitCoin is a P2P crypto-currency. The BitCoin gem aims to simplify setting up a BitCoin client running in server mode and allows your application to communicate with it via JSON-RPC.
 
 == Contributing to bitcoin
  
