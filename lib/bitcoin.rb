@@ -9,26 +9,29 @@ require 'json'
 # to accommodate other methods of interfacing with the client.
 module Bitcoin
   
-  # Used by method calls to access the client. This should be configurable in later versions.
-  EXECUTABLE = %{/Applications/Bitcoin.app/Contents/MacOS/bitcoin}
+  class Client
+    # Used by method calls to access the client. This should be configurable in later versions.
+    EXECUTABLE = %{/Applications/Bitcoin.app/Contents/MacOS/bitcoin}
   
-  # == Initiate a call to bitcoind getinfo
-  # === Returns: 
-  #  { 'version' => Fixnum,        # The version of the client. 31700 implies 0.3.17
-  #    'balance' => Float,         # The current total balance in the wallet
-  #    'blocks' => Fixnum,         # The total numbers of blocks that has been downloaded
-  #    'connections' => Fixnum,    # Number of peers the client is connected to
-  #    'proxy' => String,          # The proxy the client is using, or empty if none.
-  #    'generate' => Boolean,      # True if the client is mining, false otherwise.
-  #    'genproclimit' => Fixnum,   # Number of processors being used for mining. -1 means all available processors.
-  #    'difficulty' => Float,      # Current difficulty used by the network to adjust the rate at which blocks are mined.
-  #    'hashespersec' => Fixnum,   # How many hashes your computer is generating each second.
-  #    'testnet' => Boolean,       # True means your client operates on the test network, false means you are on the 'real' netowrk.
-  #    'keypoololdest' => Fixnum,  # The time when the oldest key in the keypool was generated.
-  #    'paytxfee' => Float,        # The trannsaction fee the cient is currently set to pay.
-  #    'errors' => String }        # Warnings returned by the client. Haven't had any yet.
-  def self.getinfo
-    JSON.parse `#{EXECUTABLE} getinfo`
+    # == Initiate a call to bitcoind getinfo
+    # === Returns: 
+    #  { 'version' => Fixnum,        # The version of the client. 31700 implies 0.3.17
+    #    'balance' => Float,         # The current total balance in the wallet
+    #    'blocks' => Fixnum,         # The total numbers of blocks that has been downloaded
+    #    'connections' => Fixnum,    # Number of peers the client is connected to
+    #    'proxy' => String,          # The proxy the client is using, or empty if none.
+    #    'generate' => Boolean,      # True if the client is mining, false otherwise.
+    #    'genproclimit' => Fixnum,   # Number of processors being used for mining. -1 means all available processors.
+    #    'difficulty' => Float,      # Current difficulty used by the network to adjust the rate at which blocks are mined.
+    #    'hashespersec' => Fixnum,   # How many hashes your computer is generating each second.
+    #    'testnet' => Boolean,       # True means your client operates on the test network, false means you are on the 'real' netowrk.
+    #    'keypoololdest' => Fixnum,  # The time when the oldest key in the keypool was generated.
+    #    'paytxfee' => Float,        # The trannsaction fee the cient is currently set to pay.
+    #    'errors' => String }        # Warnings returned by the client. Haven't had any yet.
+    def self.getinfo
+      JSON.parse `#{EXECUTABLE} getinfo`
+    end
+    
   end
   
 end

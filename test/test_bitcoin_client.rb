@@ -1,14 +1,14 @@
 require 'helper'
 
-class TestBitcoin < Test::Unit::TestCase
+class TestBitcoinClient < Test::Unit::TestCase
   
-  context "The Bitcoin library" do
+  context "The Bitcoin client" do
     
     # This is the smallest amount of work the gem can do to be of any use
     context "calling getinfo" do
       setup do
         # Execute a getinfo call
-        @reponse = Bitcoin.getinfo
+        @response = Bitcoin::Client.getinfo
       end
       
       should "be successful" do

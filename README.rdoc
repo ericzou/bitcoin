@@ -33,22 +33,22 @@ Currently only development on Mac OS X is supported. This will be addressed soon
   - <tt>/Applications/Bitcoin.app -server</tt> on Mac OS X
   - <tt>/usr/bin/bitcoind</tt> on Linux (Ubuntu)
 * Get the gem with <tt>gem install bitcoin</tt> or by using {Bundler}[http://gembundler.com].
-* Test it out with the following:
-  - <tt>
-     $ irb
-     > require 'bitcoin'
-     => true
-     > Bitcoin.getinfo
-     => {"version"=>31700, "balance"=>0.0, "blocks"=>95000, "connections"=>8, "proxy"=>"", 
-     "generate"=>true, "genproclimit"=>-1, "difficulty"=>8000.00000000, "hashespersec"=>500000, 
-     "testnet"=>false, "keypoololdest"=>1291276195, "paytxfee"=>0.0, "errors"=>""}
-    </tt>
+
+<em>Test it out with the following:</em>
+
+ $ irb
+ > require 'bitcoin'
+ => true
+ > Bitcoin::Client.getinfo
+ => { "version"=>31700, "balance"=>0.0, "blocks"=>95000, "connections"=>8, "proxy"=>"", 
+      "generate"=>true, "genproclimit"=>-1, "difficulty"=>8000.00000000, "hashespersec"=>500000, 
+      "testnet"=>false, "keypoololdest"=>1291276195, "paytxfee"=>0.0, "errors"=>"" }
 
 If all went well you can go to the {Bitcoin Faucet}[http://freebitcoins.appspot.com/] to get 0.05 BTC to help with testing. Also, remember to turn generation on; it may take a month or two to mine your first block but the (currently) 50 BTC will help with testing.
 
 === In Production
 
-Production is not supported yet, but will be soon (i.e. a few days to a week). Setup procedures on a server is similar to that of development so refer to those steps above in order to get your server set up in the meantime.
+Using the gem in production is not supported yet, but will be soon (i.e. a few days to a week). Setup procedures on a server is similar to that of development so refer to those steps above in order to get your server set up in the meantime.
 
 == More Background Information on Bitcoin
 
@@ -60,15 +60,15 @@ Bitcoin is a crypto-currency, which means a lot of hashing and verification is c
 
 == Author
 
-If you have suggestions or comments you can e-mail them to me: {michael.prins@me.com}[mailto:michael.prins@me.com?subject=Bitcoin%20Gem]
+You can find out about me or contact me from {here}[http://about.me/requnix].
 
-If you have found this gem useful and have BTC to spare you _could_ send them my way: *18V4MzDwX7q4548aXQoBeg7kedPzs67FsE*
+If you have suggestions or comments you can also e-mail me: {michael.prins@me.com}[mailto:michael.prins@me.com?subject=Bitcoin%20Gem]
 
-And no, I didn't generate addresses until I got one with the word 'Beg' in it, I swear.
+If you have found this gem useful and have BTC to spare you _could_ send them my way: <b>18V4MzDwX7q4548aXQoBeg7kedPzs67FsE</b>
+
+<em>And no, I didn't generate addresses until I got one with the word 'Beg' in it, I swear.</em>
 
 == Contributing to the Bitcoin Gem
-
-<b>I am aware that tests are failing.</b>
 
 * Check out the latest master to make sure the feature hasn't been implemented or the bug hasn't been fixed yet
 * Check out the issue tracker to make sure someone already hasn't requested it and/or contributed it
