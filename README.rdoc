@@ -1,9 +1,75 @@
-= BitCoin Gem
+= Bitcoin Gem
 
-BitCoin is a P2P crypto-currency. The BitCoin gem aims to simplify setting up a BitCoin client running in server mode and allows your application to communicate with it via JSON-RPC.
+Bitcoin is a P2P crypto-currency. The Bitcoin gem aims to simplify communicating with a Bitcoin client running in server mode. It currently does this via the CLI, but support for JSON-RPC will be added in future.
 
-== Contributing to bitcoin
- 
+== Using the Gem
+
+<b>On Bitcoin clients</b>
+
+Since the Bitcoin client deals with security issues it is in everyone's best interests that you use the latest client. Therefore, I will only be supporting the current version at the time of creation of this gem and subsequent versions as they are released.
+
+New releases should target the latest Bitcoin client and the version will be specified here. If the version listed below is not your version look for either an earlier/later version of the gem or the client.
+
+<em>Current Supported Version:</em> <b>0.3.17</b>
+
+<b>On Ruby Versions and Frameworks</b>
+
+This gem is intended to be used with Ruby 1.9.2. It is not intended specifically for any framework and I will try to keep it compatible with all of them, but most of my testing will be with Rails 3. Feedback and patches for other frameworks are appreciated.
+
+=== In Development
+
+Currently only development on Mac OS X is supported. This will be addressed soon by specifying where to find the executable on your system.
+
+* Get Bitcoin if you haven't already from {bitcoin.org}[http://www.bitcoin.org]
+* Install the application in the default location for your operating system.
+  - <tt>/Applications/Bitcoin.app</tt> for Mac OS X
+  - <tt>/usr/bin/bitcoind</tt> for Linux (Ubuntu)
+* Edit or create your Bitcoin configuration. You may have to run the application once to generate the folder. Thereafter, it can be found at
+  - <tt>$HOME/Library/Application\ Support/Bitcoin/bitcoin.conf</tt> on Mac OS X
+  - <tt>$HOME/.bitcoin/bitcoin.conf</tt> on Linux (Ubuntu)
+* Ensure the following line exists in that file
+  - <tt>rpcpassword=ANYTHING_YOU_WANT_HERE</tt>
+* Start the executable with the +-server+ option (or as a daemon) under the user that your application or the gem will be running as e.g.
+  - <tt>/Applications/Bitcoin.app -server</tt> on Mac OS X
+  - <tt>/usr/bin/bitcoind</tt> on Linux (Ubuntu)
+* Get the gem with <tt>gem install bitcoin</tt> or by using {Bundler}[http://gembundler.com].
+* Test it out with the following:
+  - <tt>
+     $ irb
+     > require 'bitcoin'
+     => true
+     > Bitcoin.getinfo
+     => {"version"=>31700, "balance"=>0.0, "blocks"=>95000, "connections"=>8, "proxy"=>"", 
+     "generate"=>true, "genproclimit"=>-1, "difficulty"=>8000.00000000, "hashespersec"=>500000, 
+     "testnet"=>false, "keypoololdest"=>1291276195, "paytxfee"=>0.0, "errors"=>""}
+    </tt>
+
+If all went well you can go to the {Bitcoin Faucet}[http://freebitcoins.appspot.com/] to get 0.05 BTC to help with testing. Also, remember to turn generation on; it may take a month or two to mine your first block but the (currently) 50 BTC will help with testing.
+
+=== In Production
+
+Production is not supported yet, but will be soon (i.e. a few days to a week). Setup procedures on a server is similar to that of development so refer to those steps above in order to get your server set up in the meantime.
+
+== More Background Information on Bitcoin
+
+Bitcoin is a crypto-currency, which means a lot of hashing and verification is constantly going on to ensure the validity of transactions. This allows the network to govern itself and removes the need for a central regulator. This is why Bitcoin can also be peer-to-peer.
+
+* Find out more about {how Bitcoin works}[http://www.bitcoinme.com].
+* Read a blog about {current Bitcoin topics}[http://www.bitcoinblogger.com].
+* Read the {official Bitcoin wiki}[http://www.bitcoin.org/wiki/doku.php]. The JSON-RPC API is also documented {here}[http://www.bitcoin.org/wiki/doku.php?id=api].
+
+== Author
+
+If you have suggestions or comments you can e-mail them to me: {michael.prins@me.com}[mailto:michael.prins@me.com?subject=Bitcoin%20Gem]
+
+If you have found this gem useful and have BTC to spare you _could_ send them my way: *18V4MzDwX7q4548aXQoBeg7kedPzs67FsE*
+
+And no, I didn't generate addresses until I got one with the word 'Beg' in it, I swear.
+
+== Contributing to the Bitcoin Gem
+
+<b>I am aware that tests are failing.</b>
+
 * Check out the latest master to make sure the feature hasn't been implemented or the bug hasn't been fixed yet
 * Check out the issue tracker to make sure someone already hasn't requested it and/or contributed it
 * Fork the project
