@@ -44,6 +44,41 @@ describe Bitcoin::Client do
     
   end
   
+  describe ".getaddressesbyaccount" do
+    
+    describe "with an account name that has an address" do
+      before :all do
+        @response = Bitcoin::Client.getaddressesbyaccount 'Michael Prins'
+      end
+      
+      it "returns an Array containing Strings" do
+        @response.should be_an_instance_of(Array)
+        @response.first.should be_an_instance_of(String)
+      end
+      it "returns the addresses associated to that account" do
+        @response.should include('1HkiBfDUL1e8Cbb8Q34asW1mUGybNKwkpU')
+      end
+      
+    end
+    
+    describe "with an acount name that doesn't exist" do
+      before :all do
+        @response = Bitcoin::Client.getaddressesbyaccount 'Kung Fu Panda'
+      end
+      
+      it "returns an empty Array" do
+        @response.should be_an_instance_of(Array)
+        @response.should be_empty
+      end
+      
+    end
+    
+    it "without an account name raises an error" do
+        lambda { Bitcoin::Client.getaddressesbyaccount }.should raise_error
+      end
+    
+  end
+  
   describe ".getbalance" do
     
     describe "without params" do

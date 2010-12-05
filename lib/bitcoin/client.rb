@@ -29,29 +29,11 @@ module Bitcoin # :nodoc
       `#{EXECUTABLE} getaccount #{address}`.gsub("\n", '')
     end
     
-    # === Initiate a call to bitcoind getinfo
-    # <b>Returns</b>: A Hash with the following key/value pairs.
-    #  { 'version' => Fixnum,        # The version of the client. 31700 implies 0.3.17.
-    #    'balance' => Float,         # The current total balance in the wallet.
-    #    'blocks' => Fixnum,         # The total number of blocks that has been downloaded.
-    #    'connections' => Fixnum,    # Number of peers the client is connected to.
-    #    'proxy' => String,          # The proxy the client is using, or empty if none.
-    #    'generate' => Boolean,      # True if the client is mining, false otherwise.
-    #    'genproclimit' => Fixnum,   # Number of processors being used for mining. -1 means all available processors.
-    #    'difficulty' => Float,      # Current difficulty used by the network to adjust the rate at which blocks are mined.
-    #    'hashespersec' => Fixnum,   # How many hashes your computer is generating each second.
-    #    'testnet' => Boolean,       # True means your client operates on the test network, false means you are on the 'real' network.
-    #    'keypoololdest' => Fixnum,  # The time when the oldest key in the keypool was generated.
-    #    'paytxfee' => Float,        # The transaction fee the client is currently set to pay.
-    #    'errors' => String }        # Warnings returned by the client. Haven't had any yet.
-    def self.getinfo
-      JSON.parse `#{EXECUTABLE} getinfo`
-    end
-    
-    # === Initiate a call to bitcoind gethashespersec
-    # <b>Returns</b>: A recent hashes per second performance measurement while generating as a Fixnum.
-    def self.gethashespersec
-      `#{EXECUTABLE} gethashespersec`.to_i
+    # === Initiate a call to bitcoind getaddressesbyaccount
+    # <b>Arguments</b>: (String) account
+    # <b>Returns</b>: An Array containing the addresses as Strings
+    def self.getaddressesbyaccount(account)
+      JSON.parse `#{EXECUTABLE} getaddressesbyaccount "#{account}"`
     end
     
     # === Initiate a call to bitcoind getbalance
@@ -82,6 +64,31 @@ module Bitcoin # :nodoc
     # <b>Returns</b>: True if the server is generating bitcoins, false if not.
     def self.getgenerate
       `#{EXECUTABLE} getgenerate` =~ /true/
+    end
+    
+    # === Initiate a call to bitcoind gethashespersec
+    # <b>Returns</b>: A recent hashes per second performance measurement while generating as a Fixnum.
+    def self.gethashespersec
+      `#{EXECUTABLE} gethashespersec`.to_i
+    end
+    
+    # === Initiate a call to bitcoind getinfo
+    # <b>Returns</b>: A Hash with the following key/value pairs.
+    #  { 'version' => Fixnum,        # The version of the client. 31700 implies 0.3.17.
+    #    'balance' => Float,         # The current total balance in the wallet.
+    #    'blocks' => Fixnum,         # The total number of blocks that has been downloaded.
+    #    'connections' => Fixnum,    # Number of peers the client is connected to.
+    #    'proxy' => String,          # The proxy the client is using, or empty if none.
+    #    'generate' => Boolean,      # True if the client is mining, false otherwise.
+    #    'genproclimit' => Fixnum,   # Number of processors being used for mining. -1 means all available processors.
+    #    'difficulty' => Float,      # Current difficulty used by the network to adjust the rate at which blocks are mined.
+    #    'hashespersec' => Fixnum,   # How many hashes your computer is generating each second.
+    #    'testnet' => Boolean,       # True means your client operates on the test network, false means you are on the 'real' network.
+    #    'keypoololdest' => Fixnum,  # The time when the oldest key in the keypool was generated.
+    #    'paytxfee' => Float,        # The transaction fee the client is currently set to pay.
+    #    'errors' => String }        # Warnings returned by the client. Haven't had any yet.
+    def self.getinfo
+      JSON.parse `#{EXECUTABLE} getinfo`
     end
     
     # === Initiate a call to bitcoind setgenerate
