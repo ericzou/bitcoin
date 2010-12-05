@@ -1,0 +1,76 @@
+#!/usr/bin/env ruby
+
+# This executable acts as a mock bitcoind client CLI
+# ==================================================
+# 
+# It allows us to call a client during testing that returns
+# predictable results without messing with an actual bitcoin
+# node. The following is the initial state of the client for
+# all calls.
+# 
+# Note the version below. This is the version this stub emulates.
+# 
+# Initial state:
+# --------------
+# 
+# Version:            31700
+# Balance:            84.00
+# Blocks:             90,000
+# Connections:        12
+# Proxy:              ""
+# Generating:         Yes
+# Processors:         All
+# Difficulty:         8032.00
+# Hashes per second:  750,000
+# Test network:       No
+# Oldest Key in Pool: 1291276195
+# Transaction fee:    0.0
+# Errors:             ""
+
+case ARGV[0]
+when 'getinfo'
+  puts %{{
+    "version" : 31700,
+    "balance" : 84.00000000,
+    "blocks" : 90000,
+    "connections" : 12,
+    "proxy" : "",
+    "generate" : true,
+    "genproclimit" : -1,
+    "difficulty" : 8032.00000000,
+    "hashespersec" : 750000,
+    "testnet" : false,
+    "keypoololdest" : 1291276195,
+    "paytxfee" : 0.00000000,
+    "errors" : ""
+}}
+
+when 'gethashespersec'
+  puts %{750000}
+  
+when 'getbalance'
+  puts %{84.00000000}
+  
+when 'getblockcount'
+  puts %{90000}
+  
+when 'getconnectioncount'
+  puts %{12}
+  
+when 'getdifficulty'
+  puts %{8032.00000000}
+  
+when 'getgenerate'
+  puts %{true}
+  
+when 'validateaddress'
+  puts %{{
+    "isvalid" : true,
+    "ismine" : false,
+    "address" : "#{ARGV[1]}"
+}}
+else
+  puts %{Unkown command}
+  exit 1
+end
+exit 0

@@ -2,7 +2,9 @@
 
 Bitcoin is a P2P crypto-currency. The Bitcoin gem aims to simplify communicating with a Bitcoin client running in server mode. It currently does this via the CLI, but support for JSON-RPC will be added in future.
 
-== Using the Gem
+I am currently in the process of adding all the API calls. This will take some time since I have to emulate the client for testing, but I will try to add a new call roughly daily until they are all there at which point the gem will be bumped to 1.0.0. I will also open the issue tracker at this point for feedback.
+
+== Usage
 
 <b>On Bitcoin clients</b>
 
@@ -16,9 +18,7 @@ New releases should target the latest Bitcoin client and the version will be spe
 
 This gem is intended to be used with Ruby 1.9.2. It is not intended specifically for any framework and I will try to keep it compatible with all of them, but most of my testing will be with Rails 3. Feedback and patches for other frameworks are appreciated.
 
-=== In Development
-
-Currently only development on Mac OS X is supported. This will be addressed soon by specifying where to find the executable on your system.
+=== Do the following to set up your Bitcoin client:
 
 * Get Bitcoin if you haven't already from {bitcoin.org}[http://www.bitcoin.org]
 * Install the application in the default location for your operating system.
@@ -37,6 +37,8 @@ Currently only development on Mac OS X is supported. This will be addressed soon
 <em>Test it out with the following:</em>
 
  $ irb
+ > BITCOIN_EXECUTABLE = '/usr/bin/bitcoind' # or whatever
+ => /usr/bin/bitcoind
  > require 'bitcoin'
  => true
  > Bitcoin::Client.getinfo
@@ -45,10 +47,6 @@ Currently only development on Mac OS X is supported. This will be addressed soon
       "testnet"=>false, "keypoololdest"=>1291276195, "paytxfee"=>0.0, "errors"=>"" }
 
 If all went well you can go to the {Bitcoin Faucet}[http://freebitcoins.appspot.com/] to get 0.05 BTC to help with testing. Also, remember to turn generation on; it may take a month or two to mine your first block but the (currently) 50 BTC will help with testing.
-
-=== In Production
-
-Using the gem in production is not supported yet, but will be soon (i.e. a few days to a week). Setup procedures on a server is similar to that of development so refer to those steps above in order to get your server set up in the meantime.
 
 == More Background Information on Bitcoin
 
