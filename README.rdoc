@@ -29,7 +29,7 @@ This gem is intended to be used with Ruby 1.9.2. It is not intended specifically
   - <tt>$HOME/.bitcoin/bitcoin.conf</tt> on Linux (Ubuntu)
 * Ensure the following line exists in that file
   - <tt>rpcpassword=ANYTHING_YOU_WANT_HERE</tt>
-* Start the executable with the +-server+ option (or as a daemon) under the user that your application or the gem will be running as e.g.
+* Start the executable with the <tt>-server</tt> option (or as a daemon) under the user that your application or the gem will be running as e.g.
   - <tt>/Applications/Bitcoin.app -server</tt> on Mac OS X
   - <tt>/usr/bin/bitcoind</tt> on Linux (Ubuntu)
 * Get the gem with <tt>gem install bitcoin</tt> or by using {Bundler}[http://gembundler.com].

@@ -32,6 +32,7 @@
 #  +--------------------------------------+-----------------+---------+---------+
 #  | 18V4MzDwX7q4548aXQoBeg7kedPzs67FsE   | *Not in wallet* |         | Yes     |
 #  | 1HkiBfDUL1e8Cbb8Q34asW1mUGybNKwkpU   | Michael Prins   |    10.0 | Yes     |
+#  | 1ESbthp2rPbyNgiASRMFWpRb2HtpvtYtmE   | Michael Prins   |     0.0 | Yes     |
 #  +--------------------------------------+-----------------+---------+---------+
 
 ADDRESSES = {
@@ -45,6 +46,13 @@ when 'getaccount'
     puts ADDRESSES[ARGV[1]][:account]
   elsif ADDRESSES[ARGV[1]] && ADDRESSES[ARGV[1]][:valid] && !ADDRESSES[ARGV[1]][:local]
     puts
+  end
+  
+when 'getaccountaddress'
+  if ARGV[1] == 'Michael Prins'
+    puts %{1ESbthp2rPbyNgiASRMFWpRb2HtpvtYtmE}
+  elsif ARGV[1] == 'New Account'
+    puts %{1Fs9Uxy2nBtAR7GQLB23JXCyuSLAYY4ACS}
   end
   
 when 'getaddressesbyaccount'

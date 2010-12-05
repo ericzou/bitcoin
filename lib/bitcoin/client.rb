@@ -15,6 +15,7 @@ module Bitcoin # :nodoc
     # BITCOIN_EXECUTABLE before requiring bitcoin.
     # 
     # The default value is '/Applications/Bitcoin.app/Contents/MacOS/bitcoin'
+    # 
     EXECUTABLE = BITCOIN_EXECUTABLE || %{/Applications/Bitcoin.app/Contents/MacOS/bitcoin}
     
     # === Initiate a call to bitcoind getaccount
@@ -24,55 +25,86 @@ module Bitcoin # :nodoc
     # as that also returns the account name.</em>
     # 
     # <b>Arguments</b>: (String) address
+    # 
     # <b>Returns</b>: The name of the account the address belongs to as a String
+    # 
     def self.getaccount(address)
       `#{EXECUTABLE} getaccount #{address}`.gsub("\n", '')
     end
     
-    # === Initiate a call to bitcoind getaddressesbyaccount
+    # === Initiate a call to bitcoind getaccountaddress
+    # 
+    # This is the primary method of getting new addresses. If the 
+    # account doesn't exist on the server it will be created.
+    # 
     # <b>Arguments</b>: (String) account
+    # 
+    # <b>Returns</b>: The new address as a String
+    # 
+    def self.getaccountaddress(account)
+      `#{EXECUTABLE} getaccountaddress "#{account}"`.gsub("\n", '')
+    end
+    
+    # === Initiate a call to bitcoind getaddressesbyaccount
+    # 
+    # <b>Arguments</b>: (String) account
+    # 
     # <b>Returns</b>: An Array containing the addresses as Strings
+    # 
     def self.getaddressesbyaccount(account)
       JSON.parse `#{EXECUTABLE} getaddressesbyaccount "#{account}"`
     end
     
     # === Initiate a call to bitcoind getbalance
+    # 
     # <b>Returns</b>: The server's available balance as a Float.
+    # 
     def self.getbalance
       `#{EXECUTABLE} getbalance`.to_f
     end
     
     # === Initiate a call to bitcoind getblockcount
+    # 
     # <b>Returns</b>: The number of blocks in the longest block chain as a Fixnum.
+    # 
     def self.getblockcount
       `#{EXECUTABLE} getblockcount`.to_i
     end
     
     # === Initiate a call to bitcoind getconnectioncount
+    # 
     # <b>Returns</b>: The number of peers the server is connected to as a Fixnum.
+    # 
     def self.getconnectioncount
       `#{EXECUTABLE} getconnectioncount`.to_i
     end
     
     # === Initiate a call to bitcoind getdifficulty
+    # 
     # <b>Returns</b>: The difficulty factor of generating a block as a Float.
+    # 
     def self.getdifficulty
       `#{EXECUTABLE} getdifficulty`.to_f
     end
     
     # === Initiate a call to bitcoind getgenerate
+    # 
     # <b>Returns</b>: True if the server is generating bitcoins, false if not.
+    # 
     def self.getgenerate
       `#{EXECUTABLE} getgenerate` =~ /true/
     end
     
     # === Initiate a call to bitcoind gethashespersec
+    # 
     # <b>Returns</b>: A recent hashes per second performance measurement while generating as a Fixnum.
+    # 
     def self.gethashespersec
       `#{EXECUTABLE} gethashespersec`.to_i
     end
     
     # === Initiate a call to bitcoind getinfo
+    # 
     # <b>Returns</b>: A Hash with the following key/value pairs.
     #  { 'version' => Fixnum,        # The version of the client. 31700 implies 0.3.17.
     #    'balance' => Float,         # The current total balance in the wallet.
@@ -87,29 +119,38 @@ module Bitcoin # :nodoc
     #    'keypoololdest' => Fixnum,  # The time when the oldest key in the keypool was generated.
     #    'paytxfee' => Float,        # The transaction fee the client is currently set to pay.
     #    'errors' => String }        # Warnings returned by the client. Haven't had any yet.
+    # 
     def self.getinfo
       JSON.parse `#{EXECUTABLE} getinfo`
     end
     
     # === Initiate a call to bitcoind setgenerate
+    # 
     # <b>Arguments</b>: (Boolean) active, (Fixnum) processors
+    # 
     # <b>Returns</b>: Nil
+    # 
     def self.setgenerate(active, processors = nil)
       `#{EXECUTABLE} setgenerate #{active} #{processors if processors && processors >= -1}`
     end
     
     # === Initiate a call to bitcoind stop
+    # 
     # <b>Returns</b>: True if the server is attempting to stop
+    # 
     def self.stop
       `#{EXECUTABLE} stop` =~ /bitcoin server stopping/
     end
     
     # === Initiate a call to bitcoind validateaddress
+    # 
     # <b>Arguments</b>: (String) address
+    # 
     # <b>Returns</b>: A Hash with the following key/value pairs.
     #  { 'isvalid' => Boolean,        # True if the address is valid, false otherwise.
     #    'ismine'  => Boolean,        # True if the address is in the wallet, false if it is valid but not in the wallet or missing otherwise.
     #    'address' => String }        # The address passed in if it is valid, otherwise this key will be missing.
+    # 
     def self.validateaddress(address)
       JSON.parse `#{EXECUTABLE} validateaddress #{address}`
     end

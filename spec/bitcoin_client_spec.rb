@@ -44,6 +44,41 @@ describe Bitcoin::Client do
     
   end
   
+  describe ".getaccountaddress" do
+    
+    describe "with an account name" do
+      before :all do
+        @response = Bitcoin::Client.getaccountaddress 'Michael Prins'
+      end
+      
+      it "returns a String" do
+        @response.should be_an_instance_of(String)
+      end
+      it "returns a new address assigned to this account" do
+        @response.should == '1ESbthp2rPbyNgiASRMFWpRb2HtpvtYtmE'
+      end
+      
+    end
+    
+    describe "with an acount name that doesn't exist" do
+      before :all do
+        @response = Bitcoin::Client.getaccountaddress 'New Account'
+      end
+      
+      it "returns a String" do
+        @response.should be_an_instance_of(String)
+      end
+      it "returns a new address assigned to a newly created account" do
+        @response.should == '1Fs9Uxy2nBtAR7GQLB23JXCyuSLAYY4ACS'
+      end
+    end
+    
+    it "without an account name raises an error" do
+      lambda { Bitcoin::Client.getaccountaddress }.should raise_error
+    end
+    
+  end
+  
   describe ".getaddressesbyaccount" do
     
     describe "with an account name that has an address" do
@@ -74,8 +109,8 @@ describe Bitcoin::Client do
     end
     
     it "without an account name raises an error" do
-        lambda { Bitcoin::Client.getaddressesbyaccount }.should raise_error
-      end
+      lambda { Bitcoin::Client.getaddressesbyaccount }.should raise_error
+    end
     
   end
   
