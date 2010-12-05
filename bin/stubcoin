@@ -40,6 +40,13 @@ ADDRESSES = {
 }
 
 case ARGV[0]
+when 'getaccount'
+  if ADDRESSES[ARGV[1]] && ADDRESSES[ARGV[1]][:account]
+    puts ADDRESSES[ARGV[1]][:account]
+  elsif ADDRESSES[ARGV[1]] && ADDRESSES[ARGV[1]][:valid] && !ADDRESSES[ARGV[1]][:local]
+    puts
+  end
+  
 when 'getinfo'
   puts %{{
     "version" : 31700,

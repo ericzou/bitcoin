@@ -2,79 +2,44 @@ require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 
 describe Bitcoin::Client do
   
-  describe ".getinfo" do 
-    before(:all) do
-      @response = Bitcoin::Client.getinfo
+  describe ".getaccount" do
+    
+    describe "with an address that is in the wallet" do
+      before :all do
+        @response = Bitcoin::Client.getaccount '1HkiBfDUL1e8Cbb8Q34asW1mUGybNKwkpU'
+      end
+      
+      it "returns a String" do
+        @response.should be_an_instance_of(String)
+      end
+      it "returns the name of the account" do
+        @response.should == 'Michael Prins'
+      end
+      
     end
     
-    it "returns a Hash" do
-      @response.should be_an_instance_of(Hash)
-    end
-    it "indicates the version of the client" do
-      @response.should have_key('version')
-      @response['version'].should == 31700
-    end
-    it "indicates the balance on the client" do
-      @response.should have_key('balance')
-      @response['balance'].should == 84.0
-    end
-    it "indicates the number of blocks downloaded" do
-      @response.should have_key('blocks')
-      @response['blocks'].should == 90000
-    end
-    it "indicates the current number of connections to peers" do
-      @response.should have_key('connections')
-      @response['connections'].should == 12
-    end
-    it "indicates the proxy in use if any" do
-      @response.should have_key('proxy')
-      @response['proxy'].should be_empty
-    end
-    it "indicates whether the client is generating blocks" do
-      @response.should have_key('generate')
-      @response['generate'].should be_true
-    end
-    it "indicates how many processors the client is allowed to use" do
-      @response.should have_key('genproclimit')
-      @response['genproclimit'].should == -1
-    end
-    it "indicates the current difficulty prescribed by the network" do
-      @response.should have_key('difficulty')
-      @response['difficulty'].should == 8032.0
-    end
-    it "indicates how many hash operations the client completes every second" do
-      @response.should have_key('hashespersec')
-      @response['hashespersec'].should == 750000
-    end
-    it "indicates whether the client is running on the test network" do
-      @response.should have_key('testnet')
-      @response['testnet'].should be_false
-    end
-    it "indicates the age of the oldest available address in the key pool" do
-      @response.should have_key('keypoololdest')
-      @response['keypoololdest'].should == 1291276195
-    end
-    it "indicates the transaction fee it adds to every transaction" do
-      @response.should have_key('paytxfee')
-      @response['paytxfee'].should == 0.0
-    end
-    it "indicates errors if they occur" do
-      @response.should have_key('errors')
-      @response['errors'].should be_empty
+    describe "with an address that is not in the wallet but valid" do
+      before :all do
+        @response = Bitcoin::Client.getaccount '18V4MzDwX7q4548aXQoBeg7kedPzs67FsE'
+      end
+      
+      it "returns an empty string" do
+        @response.should be_an_instance_of(String)
+        @response.should be_empty
+      end
+      
     end
     
-  end
-  
-  describe ".gethashespersec" do
-    before :all do
-      @response = Bitcoin::Client.gethashespersec
-    end
-    
-    it "returns a Fixnum" do
-      @response.should be_an_instance_of(Fixnum)
-    end
-    it "returns the number of hashes currently being generated every second" do
-      @response.should == 750000
+    describe "with an address that is not valid" do
+      before :all do
+        @response = Bitcoin::Client.getaccount 'abcdefghijklmnpqrstuvwxyzABCDEFGHJ'
+      end
+      
+      it "returns an empty string" do
+        @response.should be_an_instance_of(String)
+        @response.should be_empty
+      end
+      
     end
     
   end
@@ -147,6 +112,83 @@ describe Bitcoin::Client do
       @response.should be_true
     end
   
+  end
+  
+  describe ".gethashespersec" do
+    before :all do
+      @response = Bitcoin::Client.gethashespersec
+    end
+    
+    it "returns a Fixnum" do
+      @response.should be_an_instance_of(Fixnum)
+    end
+    it "returns the number of hashes currently being generated every second" do
+      @response.should == 750000
+    end
+    
+  end
+  
+  describe ".getinfo" do 
+    before(:all) do
+      @response = Bitcoin::Client.getinfo
+    end
+    
+    it "returns a Hash" do
+      @response.should be_an_instance_of(Hash)
+    end
+    it "indicates the version of the client" do
+      @response.should have_key('version')
+      @response['version'].should == 31700
+    end
+    it "indicates the balance on the client" do
+      @response.should have_key('balance')
+      @response['balance'].should == 84.0
+    end
+    it "indicates the number of blocks downloaded" do
+      @response.should have_key('blocks')
+      @response['blocks'].should == 90000
+    end
+    it "indicates the current number of connections to peers" do
+      @response.should have_key('connections')
+      @response['connections'].should == 12
+    end
+    it "indicates the proxy in use if any" do
+      @response.should have_key('proxy')
+      @response['proxy'].should be_empty
+    end
+    it "indicates whether the client is generating blocks" do
+      @response.should have_key('generate')
+      @response['generate'].should be_true
+    end
+    it "indicates how many processors the client is allowed to use" do
+      @response.should have_key('genproclimit')
+      @response['genproclimit'].should == -1
+    end
+    it "indicates the current difficulty prescribed by the network" do
+      @response.should have_key('difficulty')
+      @response['difficulty'].should == 8032.0
+    end
+    it "indicates how many hash operations the client completes every second" do
+      @response.should have_key('hashespersec')
+      @response['hashespersec'].should == 750000
+    end
+    it "indicates whether the client is running on the test network" do
+      @response.should have_key('testnet')
+      @response['testnet'].should be_false
+    end
+    it "indicates the age of the oldest available address in the key pool" do
+      @response.should have_key('keypoololdest')
+      @response['keypoololdest'].should == 1291276195
+    end
+    it "indicates the transaction fee it adds to every transaction" do
+      @response.should have_key('paytxfee')
+      @response['paytxfee'].should == 0.0
+    end
+    it "indicates errors if they occur" do
+      @response.should have_key('errors')
+      @response['errors'].should be_empty
+    end
+    
   end
   
   describe ".setgenerate" do

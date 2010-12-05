@@ -17,6 +17,18 @@ module Bitcoin # :nodoc
     # The default value is '/Applications/Bitcoin.app/Contents/MacOS/bitcoin'
     EXECUTABLE = BITCOIN_EXECUTABLE || %{/Applications/Bitcoin.app/Contents/MacOS/bitcoin}
     
+    # === Initiate a call to bitcoind getaccount
+    # 
+    # <em>Take care with this method. It does not identify invalid addresses
+    # or those not in the wallet. I recommend using .validateaddress instead
+    # as that also returns the account name.</em>
+    # 
+    # <b>Arguments</b>: (String) address
+    # <b>Returns</b>: The name of the account the address belongs to as a String
+    def self.getaccount(address)
+      `#{EXECUTABLE} getaccount #{address}`.gsub("\n", '')
+    end
+    
     # === Initiate a call to bitcoind getinfo
     # <b>Returns</b>: A Hash with the following key/value pairs.
     #  { 'version' => Fixnum,        # The version of the client. 31700 implies 0.3.17.
