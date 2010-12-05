@@ -27,6 +27,18 @@
 # Transaction fee:    0.0
 # Errors:             ""
 
+#  +--------------------------------------+-----------------+---------+---------+
+#  | Address                              | Account         | Balance | Valid?  |
+#  +--------------------------------------+-----------------+---------+---------+
+#  | 18V4MzDwX7q4548aXQoBeg7kedPzs67FsE   | *Not in wallet* |         | Yes     |
+#  | 1HkiBfDUL1e8Cbb8Q34asW1mUGybNKwkpU   | Michael Prins   |    10.0 | Yes     |
+#  +--------------------------------------+-----------------+---------+---------+
+
+ADDRESSES = {
+  '18V4MzDwX7q4548aXQoBeg7kedPzs67FsE' => { :valid => true, :local => false },
+  '1HkiBfDUL1e8Cbb8Q34asW1mUGybNKwkpU' => { :valid => true, :local => true, :account => 'Michael Prins', :balance => 10.0 }
+}
+
 case ARGV[0]
 when 'getinfo'
   puts %{{
@@ -64,11 +76,24 @@ when 'getgenerate'
   puts %{true}
   
 when 'validateaddress'
-  puts %{{
-    "isvalid" : true,
+  if ADDRESSES[ARGV[1]] && ADDRESSES[ARGV[1]][:local]
+    puts %{{
+    "isvalid" : #{ADDRESSES[ARGV[1]][:valid]},
+    "ismine" : true,
+    "address" : "#{ARGV[1]}",
+    "account" : "#{ADDRESSES[ARGV[1]][:account]}"
+}}
+  elsif ADDRESSES[ARGV[1]]
+    puts %{{
+    "isvalid" : #{ADDRESSES[ARGV[1]][:valid]},
     "ismine" : false,
     "address" : "#{ARGV[1]}"
 }}
+  else
+    puts %{{
+    "isvalid" : false
+}}
+  end
 else
   puts %{Unkown command}
   exit 1
