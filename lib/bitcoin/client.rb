@@ -45,8 +45,8 @@ module Bitcoin # :nodoc
     # === Initiate a call to bitcoind getaccount
     # 
     # <em>Take care with this method. It does not identify invalid addresses
-    # or those not in the wallet. I recommend using .validateaddress instead
-    # as that also returns the account name.</em>
+    # or those not in the wallet. I recommend using ::validateaddress instead
+    # since that also returns the account name.</em>
     # 
     # <b>Arguments</b>: (String) address
     # 
@@ -58,8 +58,10 @@ module Bitcoin # :nodoc
     
     # === Initiate a call to bitcoind getaccountaddress
     # 
-    # This is the primary method of getting new addresses. If the 
-    # account doesn't exist on the server it will be created.
+    # This is synonymous with getnewaddress, but since getnewaddress also
+    # allows the creation of new addresses on the default account it is the
+    # preferred method of achieving this. This may have been deprecated by
+    # Bitcoin.
     # 
     # <b>Arguments</b>: (String) account
     # 
@@ -146,6 +148,19 @@ module Bitcoin # :nodoc
     # 
     def self.getinfo
       JSON.parse `#{EXECUTABLE} getinfo`
+    end
+    
+    # === Initiate a call to bitcoind getnewaddress
+    # 
+    # This is the primary method of getting new addresses. If the 
+    # account doesn't exist on the server it will be created.
+    # 
+    # <b>Arguments</b>: (String) account
+    # 
+    # <b>Returns</b>: The new address as a String
+    # 
+    def self.getnewaddress(account = nil)
+      `#{EXECUTABLE} getnewaddress #{"\"#{account}\"" if account}`.gsub("\n", '')
     end
     
     # === Initiate a call to bitcoind setgenerate

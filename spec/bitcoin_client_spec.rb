@@ -112,7 +112,7 @@ describe Bitcoin::Client do
       
     end
     
-    describe "with an acount name that doesn't exist" do
+    describe "with an account name that doesn't exist" do
       before :all do
         @response = Bitcoin::Client.getaddressesbyaccount 'Kung Fu Panda'
       end
@@ -132,7 +132,7 @@ describe Bitcoin::Client do
   
   describe "::getbalance" do
     
-    describe "without params" do
+    describe "without any arguments" do
       before :all do
         @response = Bitcoin::Client.getbalance
       end
@@ -273,6 +273,51 @@ describe Bitcoin::Client do
     it "indicates errors if they occur" do
       @response.should have_key('errors')
       @response['errors'].should be_empty
+    end
+    
+  end
+  
+  describe "::getnewaddress" do
+    
+    describe "with an account name" do
+      before :all do
+        @response = Bitcoin::Client.getnewaddress 'Michael Prins'
+      end
+      
+      it "returns a String" do
+        @response.should be_an_instance_of(String)
+      end
+      it "returns a new address assigned to this account" do
+        @response.should == '1ESbthp2rPbyNgiASRMFWpRb2HtpvtYtmE'
+      end
+      
+    end
+    
+    describe "with an account name that doesn't exist" do
+      before :all do
+        @response = Bitcoin::Client.getnewaddress 'New Account'
+      end
+      
+      it "returns a String" do
+        @response.should be_an_instance_of(String)
+      end
+      it "returns a new address assigned to a newly created account" do
+        @response.should == '1Fs9Uxy2nBtAR7GQLB23JXCyuSLAYY4ACS'
+      end
+    end
+    
+    describe "without an account name" do
+      before :all do
+        @response = Bitcoin::Client.getnewaddress
+      end
+      
+      it "returns a String" do
+        @response.should be_an_instance_of(String)
+      end
+      it "returns a new address assigned to the default account" do
+        @response.should == '12kkn4wkDjDYr69Z27DFmWeMGe927YnZuj'
+      end
+      
     end
     
   end

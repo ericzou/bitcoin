@@ -37,7 +37,10 @@
 
 ADDRESSES = {
   '18V4MzDwX7q4548aXQoBeg7kedPzs67FsE' => { :valid => true, :local => false },
-  '1HkiBfDUL1e8Cbb8Q34asW1mUGybNKwkpU' => { :valid => true, :local => true, :account => 'Michael Prins', :balance => 10.0 }
+  '1HkiBfDUL1e8Cbb8Q34asW1mUGybNKwkpU' => { :valid => true, :local => true, :account => 'Michael Prins', :balance => 10.0,
+                                            :transactions => [ { :amount => 10.0, :confirmations => 4 }, 
+                                                               { :amount => 15.0, :confirmations => 5 }, 
+                                                               { :amount => 25.0, :confirmations => 6 } ] }
 }
 
 case ARGV[0]
@@ -72,7 +75,11 @@ when 'getaddressesbyaccount'
 ]}
   
 when 'getbalance'
-  puts %{84.00000000}
+  if ARGV[1]
+    
+  else
+    puts %{84.00000000}
+  end
   
 when 'getblockcount'
   puts %{90000}
@@ -105,6 +112,15 @@ when 'getinfo'
     "paytxfee" : 0.00000000,
     "errors" : ""
 }}
+  
+when 'getnewaddress'
+  if ARGV[1] == 'Michael Prins'
+    puts %{1ESbthp2rPbyNgiASRMFWpRb2HtpvtYtmE}
+  elsif ARGV[1] == 'New Account'
+    puts %{1Fs9Uxy2nBtAR7GQLB23JXCyuSLAYY4ACS}
+  else
+    puts %{12kkn4wkDjDYr69Z27DFmWeMGe927YnZuj}
+  end
   
 when 'setgenerate'
   # No output from bitcoind
