@@ -20,14 +20,6 @@ Jeweler::Tasks.new do |gem|
   gem.email = "michael.prins@me.com"
   gem.author = "Michael Prins"
   gem.requirements << "An instance of the bitcoin client running where the gem will be loaded"
-  
-  # Include your dependencies below. Runtime dependencies are required when using your gem,
-  # and development dependencies are only needed for development (ie running rake tasks, tests, etc)
-  gem.add_runtime_dependency 'json'
-  
-  gem.add_development_dependency 'rspec', '~> 2.2.0'
-  gem.add_development_dependency 'jeweler', '~> 1.5.1'
-  gem.add_development_dependency 'simplecov', '>= 0.3.5'
 end
 Jeweler::RubygemsDotOrgTasks.new
 

@@ -72,7 +72,21 @@ module Bitcoin # :nodoc
       `#{EXECUTABLE} getgenerate` =~ /true/
     end
     
+    # === Initiate a call to bitcoind setgenerate
+    # <b>Arguments</b>: (Boolean) active, (Fixnum) processors
+    # <b>Returns</b>: Nil
+    def self.setgenerate(active, processors = nil)
+      `#{EXECUTABLE} setgenerate #{active} #{processors if processors && processors >= -1}`
+    end
+    
+    # === Initiate a call to bitcoind stop
+    # <b>Returns</b>: True if the server is attempting to stop
+    def self.stop
+      `#{EXECUTABLE} stop` =~ /bitcoin server stopping/
+    end
+    
     # === Initiate a call to bitcoind validateaddress
+    # <b>Arguments</b>: (String) address
     # <b>Returns</b>: A Hash with the following key/value pairs.
     #  { 'isvalid' => Boolean,        # True if the address is valid, false otherwise.
     #    'ismine'  => Boolean,        # True if the address is in the wallet, false if it is valid but not in the wallet or missing otherwise.

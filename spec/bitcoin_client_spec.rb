@@ -2,7 +2,7 @@ require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 
 describe Bitcoin::Client do
   
-  describe "calling getinfo" do 
+  describe ".getinfo" do 
     before(:all) do
       @response = Bitcoin::Client.getinfo
     end
@@ -65,7 +65,7 @@ describe Bitcoin::Client do
     
   end
   
-  describe "calling gethashespersec" do
+  describe ".gethashespersec" do
     before :all do
       @response = Bitcoin::Client.gethashespersec
     end
@@ -79,7 +79,7 @@ describe Bitcoin::Client do
     
   end
   
-  describe "calling getbalance" do
+  describe ".getbalance" do
     
     describe "without params" do
       before :all do
@@ -97,7 +97,7 @@ describe Bitcoin::Client do
     
   end
   
-  describe "calling getblockcount" do
+  describe ".getblockcount" do
     before :all do
       @response = Bitcoin::Client.getblockcount
     end
@@ -111,7 +111,7 @@ describe Bitcoin::Client do
     
   end
   
-  describe "calling getconnectioncount" do
+  describe ".getconnectioncount" do
     before :all do
       @response = Bitcoin::Client.getconnectioncount
     end
@@ -124,7 +124,7 @@ describe Bitcoin::Client do
     end
   end
   
-  describe "calling getdifficulty" do
+  describe ".getdifficulty" do
     before :all do
       @response = Bitcoin::Client.getdifficulty
     end
@@ -138,7 +138,7 @@ describe Bitcoin::Client do
   
   end
   
-  describe "calling getgenerate" do
+  describe ".getgenerate" do
     before :all do
       @response = Bitcoin::Client.getgenerate
     end
@@ -149,7 +149,37 @@ describe Bitcoin::Client do
   
   end
   
-  describe "calling validateaddress" do
+  describe ".setgenerate" do
+    
+    it "requires a parameter to turn generation on or off" do
+      lambda {
+        Bitcoin::Client.setgenerate
+      }.should raise_error
+    end
+    it "returns an empty string" do
+      Bitcoin::Client.setgenerate(true).should be_empty
+      Bitcoin::Client.setgenerate(false).should be_empty
+    end
+    it "optionally sets the number of processors to use" do
+      lambda { Bitcoin::Client.setgenerate(true, 1) }.should_not raise_error
+      lambda { Bitcoin::Client.setgenerate(true, -1) }.should_not raise_error
+      lambda { Bitcoin::Client.setgenerate(true, -10) }.should_not raise_error
+    end
+    
+  end
+  
+  describe ".stop" do
+    before :all do
+      @response = Bitcoin::Client.stop
+    end
+    
+    it "returns true if the server is trying to stop" do
+      @response.should be_true
+    end
+    
+  end
+  
+  describe ".validateaddress" do
     
     describe "with an invalid address" do
       before :all do

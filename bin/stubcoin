@@ -94,6 +94,13 @@ when 'validateaddress'
     "isvalid" : false
 }}
   end
+  
+when 'setgenerate'
+  # No output from bitcoind
+  
+when 'stop'
+  puts %{bitcoin server stopping}
+  
 else
   puts %{Unkown command}
   exit 1
