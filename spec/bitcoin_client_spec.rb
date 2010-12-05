@@ -2,7 +2,23 @@ require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 
 describe Bitcoin::Client do
   
-  describe ".getaccount" do
+  describe "::backupwallet" do
+    
+    it "requires a path" do
+      lambda { Bitcoin::Client.backupwallet }.should raise_error
+    end
+    it "with a directory path returns true" do
+      Bitcoin::Client.backupwallet('.').should be_true
+      FileUtils.rm_f(File.join '.', 'wallet.dat')
+    end
+    it "with a file path returns true" do
+      Bitcoin::Client.backupwallet('wallet.dat').should be_true
+      FileUtils.rm_f('wallet.dat')
+    end
+    
+  end
+  
+  describe "::getaccount" do
     
     describe "with an address that is in the wallet" do
       before :all do
@@ -44,7 +60,7 @@ describe Bitcoin::Client do
     
   end
   
-  describe ".getaccountaddress" do
+  describe "::getaccountaddress" do
     
     describe "with an account name" do
       before :all do
@@ -79,7 +95,7 @@ describe Bitcoin::Client do
     
   end
   
-  describe ".getaddressesbyaccount" do
+  describe "::getaddressesbyaccount" do
     
     describe "with an account name that has an address" do
       before :all do
@@ -114,7 +130,7 @@ describe Bitcoin::Client do
     
   end
   
-  describe ".getbalance" do
+  describe "::getbalance" do
     
     describe "without params" do
       before :all do
@@ -132,7 +148,7 @@ describe Bitcoin::Client do
     
   end
   
-  describe ".getblockcount" do
+  describe "::getblockcount" do
     before :all do
       @response = Bitcoin::Client.getblockcount
     end
@@ -146,7 +162,7 @@ describe Bitcoin::Client do
     
   end
   
-  describe ".getconnectioncount" do
+  describe "::getconnectioncount" do
     before :all do
       @response = Bitcoin::Client.getconnectioncount
     end
@@ -159,7 +175,7 @@ describe Bitcoin::Client do
     end
   end
   
-  describe ".getdifficulty" do
+  describe "::getdifficulty" do
     before :all do
       @response = Bitcoin::Client.getdifficulty
     end
@@ -173,7 +189,7 @@ describe Bitcoin::Client do
   
   end
   
-  describe ".getgenerate" do
+  describe "::getgenerate" do
     before :all do
       @response = Bitcoin::Client.getgenerate
     end
@@ -184,7 +200,7 @@ describe Bitcoin::Client do
   
   end
   
-  describe ".gethashespersec" do
+  describe "::gethashespersec" do
     before :all do
       @response = Bitcoin::Client.gethashespersec
     end
@@ -198,7 +214,7 @@ describe Bitcoin::Client do
     
   end
   
-  describe ".getinfo" do 
+  describe "::getinfo" do 
     before(:all) do
       @response = Bitcoin::Client.getinfo
     end
@@ -261,7 +277,7 @@ describe Bitcoin::Client do
     
   end
   
-  describe ".setgenerate" do
+  describe "::setgenerate" do
     
     it "requires a parameter to turn generation on or off" do
       lambda {
@@ -280,7 +296,7 @@ describe Bitcoin::Client do
     
   end
   
-  describe ".stop" do
+  describe "::stop" do
     before :all do
       @response = Bitcoin::Client.stop
     end
@@ -291,7 +307,7 @@ describe Bitcoin::Client do
     
   end
   
-  describe ".validateaddress" do
+  describe "::validateaddress" do
     
     describe "with an invalid address" do
       before :all do

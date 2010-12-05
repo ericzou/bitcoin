@@ -41,6 +41,13 @@ ADDRESSES = {
 }
 
 case ARGV[0]
+when 'backupwallet'
+  if File.exists?(ARGV[1]) and File.stat(ARGV[1]).directory?
+    File.open(File.join(ARGV[1], 'wallet.dat'), 'w') { |f| f.write (0..20000).collect{ rand }.join }
+  else
+    File.open(ARGV[1], 'w') { |f| f.write (0..20000).collect{ rand }.join }
+  end
+  
 when 'getaccount'
   if ADDRESSES[ARGV[1]] && ADDRESSES[ARGV[1]][:account]
     puts ADDRESSES[ARGV[1]][:account]

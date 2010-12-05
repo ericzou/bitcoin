@@ -18,6 +18,30 @@ module Bitcoin # :nodoc
     # 
     EXECUTABLE = BITCOIN_EXECUTABLE || %{/Applications/Bitcoin.app/Contents/MacOS/bitcoin}
     
+    # === Initiate a call to bitcoind backupwallet
+    # 
+    # There is some logic added here to help you determine whether the backup succeeded.
+    # The system checks if file was modified since this method was called and that its
+    # size is non-zero for good measure.
+    # 
+    # <b>Arguments</b>: (String) path
+    # 
+    # <b>Returns</b>: True if the system figures it worked
+    #
+    def self.backupwallet(path)
+      
+      # Do some cursory investigation
+      start_time = Time.now
+      file_existed = File.exists?(path)
+      
+      # Trigger the backup
+      `#{EXECUTABLE} backupwallet #{path}`
+      
+      # Make an estimation as to whether it succeeded or not
+      (File.stat(path).mtime > start_time) && (File.stat(path).directory? || File.stat(path).size > 0)
+      
+    end
+    
     # === Initiate a call to bitcoind getaccount
     # 
     # <em>Take care with this method. It does not identify invalid addresses
