@@ -5,13 +5,15 @@
 
 Gem::Specification.new do |s|
   s.name = %q{bitcoin}
-  s.version = "0.0.1"
+  s.version = "0.0.2"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Michael Prins"]
-  s.date = %q{2010-12-04}
-  s.description = %q{The BitCoin RubyGem intends to simplify the process of communicating with and managing a BitCoin client on the same server by issuing commands to it via JSON-RPC. It will also include basic account management and transaction feedback.}
+  s.date = %q{2010-12-05}
+  s.default_executable = %q{stubcoin}
+  s.description = %q{The Bitcoin RubyGem intends to simplify the process of communicating with and managing a BitCoin client on the same server by issuing commands to it via the bitcoind CLI. It will also include basic account management and transaction feedback.}
   s.email = %q{michael.prins@me.com}
+  s.executables = ["stubcoin"]
   s.extra_rdoc_files = [
     "LICENSE.txt",
     "README.rdoc"
@@ -25,19 +27,22 @@ Gem::Specification.new do |s|
     "README.rdoc",
     "Rakefile",
     "VERSION",
+    "bin/stubcoin",
     "bitcoin.gemspec",
     "lib/bitcoin.rb",
-    "test/helper.rb",
-    "test/test_bitcoin.rb"
+    "lib/bitcoin/client.rb",
+    "spec/bitcoin_client_spec.rb",
+    "spec/spec_helper.rb"
   ]
   s.homepage = %q{http://github.com/requnix/bitcoin}
   s.licenses = ["MIT"]
   s.require_paths = ["lib"]
+  s.requirements = ["An instance of the bitcoin client running where the gem will be loaded"]
   s.rubygems_version = %q{1.3.7}
-  s.summary = %q{Ruby library for communicating with a BitCoin client}
+  s.summary = %q{Ruby library for communicating with a Bitcoin client}
   s.test_files = [
-    "test/helper.rb",
-    "test/test_bitcoin.rb"
+    "spec/bitcoin_client_spec.rb",
+    "spec/spec_helper.rb"
   ]
 
   if s.respond_to? :specification_version then
@@ -49,23 +54,35 @@ Gem::Specification.new do |s|
       s.add_development_dependency(%q<shoulda>, [">= 0"])
       s.add_development_dependency(%q<bundler>, ["~> 1.0.0"])
       s.add_development_dependency(%q<jeweler>, ["~> 1.5.1"])
-      s.add_development_dependency(%q<rcov>, [">= 0"])
+      s.add_development_dependency(%q<simplecov>, [">= 0.3.5"])
+      s.add_development_dependency(%q<rspec>, ["~> 2.2.0"])
       s.add_runtime_dependency(%q<json>, [">= 0"])
+      s.add_development_dependency(%q<rspec>, ["~> 2.2.0"])
+      s.add_development_dependency(%q<jeweler>, ["~> 1.5.1"])
+      s.add_development_dependency(%q<simplecov>, [">= 0.3.5"])
     else
       s.add_dependency(%q<json>, [">= 0"])
       s.add_dependency(%q<shoulda>, [">= 0"])
       s.add_dependency(%q<bundler>, ["~> 1.0.0"])
       s.add_dependency(%q<jeweler>, ["~> 1.5.1"])
-      s.add_dependency(%q<rcov>, [">= 0"])
+      s.add_dependency(%q<simplecov>, [">= 0.3.5"])
+      s.add_dependency(%q<rspec>, ["~> 2.2.0"])
       s.add_dependency(%q<json>, [">= 0"])
+      s.add_dependency(%q<rspec>, ["~> 2.2.0"])
+      s.add_dependency(%q<jeweler>, ["~> 1.5.1"])
+      s.add_dependency(%q<simplecov>, [">= 0.3.5"])
     end
   else
     s.add_dependency(%q<json>, [">= 0"])
     s.add_dependency(%q<shoulda>, [">= 0"])
     s.add_dependency(%q<bundler>, ["~> 1.0.0"])
     s.add_dependency(%q<jeweler>, ["~> 1.5.1"])
-    s.add_dependency(%q<rcov>, [">= 0"])
+    s.add_dependency(%q<simplecov>, [">= 0.3.5"])
+    s.add_dependency(%q<rspec>, ["~> 2.2.0"])
     s.add_dependency(%q<json>, [">= 0"])
+    s.add_dependency(%q<rspec>, ["~> 2.2.0"])
+    s.add_dependency(%q<jeweler>, ["~> 1.5.1"])
+    s.add_dependency(%q<simplecov>, [">= 0.3.5"])
   end
 end
 
