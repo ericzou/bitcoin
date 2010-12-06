@@ -188,6 +188,23 @@ module Bitcoin # :nodoc
       `#{EXECUTABLE} getreceivedbyaddress "#{address}" #{minimum_confirmations}`.to_f
     end
     
+    # === Initiate a call to bitcoind getwork
+    # 
+    # This is not so useful for our purposes, but included for brevity.
+    # 
+    # <b>Arguments</b>: (String) data <optional>
+    # 
+    # <b>Returns</b>: True if the block data was solved on this attempt,
+    #                 or the current state of the hashing computation as a Hash
+    #
+    def self.getwork(data = nil)
+      if data
+        `#{EXECUTABLE} getwork "#{data}"` =~ /true/
+      else
+        JSON.parse `#{EXECUTABLE} getwork`
+      end
+    end
+    
     # === Initiate a call to bitcoind setgenerate
     # 
     # <b>Arguments</b>: (Boolean) active, (Fixnum) processors

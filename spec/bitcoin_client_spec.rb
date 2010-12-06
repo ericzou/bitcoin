@@ -417,6 +417,45 @@ describe Bitcoin::Client do
     
   end
   
+  describe "::getwork" do
+    
+    describe "without any arguments" do
+      before :all do
+        @response = Bitcoin::Client.getwork
+      end
+      
+      it "returns a Hash" do
+        @response.should be_an_instance_of(Hash)
+      end
+      it "returns the current state of the hashing algorithm" do
+        @response.should have_key('midstate')
+        @response['midstate'].should == "5b888679fb6c783341b5a92a1686a903d75dc9fd583d0fefa3512a60ab6b14e8"
+        
+        @response.should have_key('hash1')
+        @response['hash1'].should == "00000000000000000000000000000000000000000000000000000000000000000000008000000000000000000000000000000000000000000000000000010000"
+      end
+      it "returns the data it is currently operating on" do
+        @response.should have_key('data')
+        @response['data'].should == "00000001105806e9113989734663e3f6d180f58c3783d66d2e6bab9d0002a72600000000dfddc406fa70ba1fab1f3c7cc5526718e2e2e14cadc0c0e29504df4feb85e3314cfd0f551b081cd200000000000000800000000000000000000000000000000000000000000000000000000000000000000000000000000080020000"
+      end
+      it "returns the little-endian target accuracy it is trying to achieve" do
+        @response.should have_key('target')
+        @response['target'].should == "000000000000000000000000000000000000000000000000d21c080000000000"
+      end
+      
+    end
+    
+    describe "when passed a data block" do
+      
+      it "tries to solve the block and returns true if successful" do
+        @response = Bitcoin::Client.getwork '00000001105806e9113989734663e3f6d180f58c3783d66d2e6bab9d0002a72600000000dfddc406fa70ba1fab1f3c7cc5526718e2e2e14cadc0c0e29504df4feb85e3314cfd0f551b081cd200000000000000800000000000000000000000000000000000000000000000000000000000000000000000000000000080020000'
+        @response.should be_false
+      end
+      
+    end
+    
+  end
+  
   describe "::setgenerate" do
     
     it "requires a parameter to turn generation on or off" do
