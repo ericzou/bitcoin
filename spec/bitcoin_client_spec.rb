@@ -363,6 +363,60 @@ describe Bitcoin::Client do
     
   end
   
+  describe ":getreceivedbyaddress" do
+    
+    it "requires an address" do
+      lambda { Bitcoin::Client.getreceivedbyaddress }.should raise_error
+    end
+    it "takes an optional minimum confirmations parameter" do
+      lambda { Bitcoin::Client.getreceivedbyaddress '1HkiBfDUL1e8Cbb8Q34asW1mUGybNKwkpU' }.should_not raise_error
+      lambda { Bitcoin::Client.getreceivedbyaddress '1HkiBfDUL1e8Cbb8Q34asW1mUGybNKwkpU', 1 }.should_not raise_error
+    end
+    
+    describe "with an address that has received and made transactions" do
+      before :all do
+        @response = Bitcoin::Client.getreceivedbyaddress '1HkiBfDUL1e8Cbb8Q34asW1mUGybNKwkpU'
+      end
+      
+      it "returns a Float" do
+        @response.should be_an_instance_of(Float)
+      end
+      it "returns the sum of the received transactions" do
+        @response.should == 50.0
+      end
+      
+    end
+    
+    describe "with an address that has received transactions and a minimum confirmation threshold" do
+      before :all do
+        @response = Bitcoin::Client.getreceivedbyaddress '1HkiBfDUL1e8Cbb8Q34asW1mUGybNKwkpU', 5
+      end
+      
+      it "returns a Float" do
+        @response.should be_an_instance_of(Float)
+      end
+      it "returns the total of all received transactions with at least the specified number of confirmations" do
+        @response.should == 40.0
+      end
+      
+    end
+    
+    describe "with an address that has not received transactions" do
+      before :all do
+        @response = Bitcoin::Client.getreceivedbyaddress '1ESbthp2rPbyNgiASRMFWpRb2HtpvtYtmE'
+      end
+      
+      it "returns a Float" do
+        @response.should be_an_instance_of(Float)
+      end
+      it "returns zero" do
+        @response.should == 0.0
+      end
+      
+    end
+    
+  end
+  
   describe "::setgenerate" do
     
     it "requires a parameter to turn generation on or off" do

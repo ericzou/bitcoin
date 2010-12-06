@@ -173,6 +173,21 @@ module Bitcoin # :nodoc
       `#{EXECUTABLE} getreceivedbyaccount "#{account}"`.to_f
     end
     
+    # === Initiate a call to bitcoind getreceivedbyaddress
+    # 
+    # This turns out to be a rather important method since ::getreceivedbyaccount
+    # actually returns the balance and not the received amounts. Therefore this
+    # method should be used to determine if a transaction was made once the funds
+    # are transferred out.
+    # 
+    # <b>Arguments</b>: (String) address
+    # 
+    # <b>Returns</b>: The total of the received transactions as a Float.
+    #
+    def self.getreceivedbyaddress(address, minimum_confirmations = 1)
+      `#{EXECUTABLE} getreceivedbyaddress "#{address}" #{minimum_confirmations}`.to_f
+    end
+    
     # === Initiate a call to bitcoind setgenerate
     # 
     # <b>Arguments</b>: (Boolean) active, (Fixnum) processors

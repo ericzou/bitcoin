@@ -133,6 +133,15 @@ when 'getreceivedbyaccount'
                      each { |x| total += x }
   puts total
   
+when 'getreceivedbyaddress'
+  total = 0.0
+  (ADDRESSES[ARGV[1]][:transactions] || {}).each do |transaction|
+    if (transaction[:amount] > 0) && (transaction[:confirmations] >= ARGV[2].to_i)
+      total += transaction[:amount]
+    end
+  end
+  puts total
+  
 when 'setgenerate'
   # No output from bitcoind
   
