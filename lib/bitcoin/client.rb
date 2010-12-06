@@ -163,6 +163,16 @@ module Bitcoin # :nodoc
       `#{EXECUTABLE} getnewaddress #{"\"#{account}\"" if account}`.gsub("\n", '')
     end
     
+    # === Initiate a call to bitcoind getreceivedbyaccount
+    # 
+    # <b>Arguments</b>: (String) account
+    # 
+    # <b>Returns</b>: The account's available balance as a Float.
+    #
+    def self.getreceivedbyaccount(account)
+      `#{EXECUTABLE} getreceivedbyaccount "#{account}"`.to_f
+    end
+    
     # === Initiate a call to bitcoind setgenerate
     # 
     # <b>Arguments</b>: (Boolean) active, (Fixnum) processors

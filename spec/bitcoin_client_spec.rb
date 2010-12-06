@@ -322,6 +322,47 @@ describe Bitcoin::Client do
     
   end
   
+  describe "::getreceivedbyaccount" do
+    
+    it "requires an account name" do
+      lambda { Bitcoin::Client.getreceivedbyaccount }.should raise_error
+    end
+    it "does not take an optional minumum confirmations parameter" do
+      # This functionality seems to be broken in 0.3.17 beta
+      lambda { Bitcoin::Client.getreceivedbyaccount 'Michael Prins' }.should_not raise_error
+      lambda { Bitcoin::Client.getreceivedbyaccount 'Michael Prins', 1 }.should raise_error
+    end
+    
+    describe "with an account that has received and made transactions" do
+      before :all do
+        @response = Bitcoin::Client.getreceivedbyaccount 'Michael Prins'
+      end
+      
+      it "returns a Float" do
+        @response.should be_an_instance_of(Float)
+      end
+      it "returns the difference between transactions received and paid" do
+        @response.should == 45.0
+      end
+      
+    end
+    
+    describe "with an account that has no transactions" do
+      before :all do
+        @response = Bitcoin::Client.getreceivedbyaccount 'Bitcoin Faucet'
+      end
+      
+      it "returns a Float" do
+        @response.should be_an_instance_of(Float)
+      end
+      it "returns the difference between transactions received and paid" do
+        @response.should == 0.0
+      end
+      
+    end
+    
+  end
+  
   describe "::setgenerate" do
     
     it "requires a parameter to turn generation on or off" do
